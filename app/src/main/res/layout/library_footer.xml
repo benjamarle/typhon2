@@ -34,5 +34,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:tint="?attr/colorAccent"
-        android:src="@drawable/ic_stop_black_24dp" />
+        app:srcCompat="@drawable/ic_stop_black_24dp" />
 </FrameLayout>

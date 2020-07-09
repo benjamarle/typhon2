@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/fonts_list"
             android:layout_width="match_parent"
             android:layout_height="200dp" />
@@ -46,7 +46,7 @@
             android:id="@+id/fontsize_minus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_remove_black_24dp"
+            app:srcCompat="@drawable/ic_remove_black_24dp"
             android:tint="?attr/colorAccent" />
 
         <SeekBar
@@ -62,7 +62,7 @@
             android:id="@+id/fontsize_plus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_add_black_24dp"
+            app:srcCompat="@drawable/ic_add_black_24dp"
             android:tint="?attr/colorAccent" />
     </LinearLayout>
 </LinearLayout>

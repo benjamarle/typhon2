@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:padding="10dp"
-        android:src="@drawable/ic_toc_black_24dp" />
+        app:srcCompat="@drawable/ic_toc_black_24dp" />
 
     <TextView
         android:id="@+id/text"

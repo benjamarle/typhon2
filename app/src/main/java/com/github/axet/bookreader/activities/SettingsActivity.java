@@ -7,9 +7,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.ActionBar;
-import android.support.v7.preference.PreferenceFragmentCompat;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.preference.PreferenceFragmentCompat;
 import android.view.MenuItem;
 
 import com.github.axet.androidlibrary.activities.AppCompatSettingsThemeActivity;

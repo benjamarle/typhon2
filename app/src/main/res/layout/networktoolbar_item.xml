@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar_icon"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -15,7 +16,7 @@
         android:background="?attr/toolbar_icon_bg"
         android:clickable="false"
         android:gravity="center"
-        android:src="@drawable/ic_image_black_24dp"
+        app:srcCompat="@drawable/ic_image_black_24dp"
         android:tint="?attr/colorAccent" />
 
     <com.github.axet.androidlibrary.widgets.TextMax

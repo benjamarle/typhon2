@@ -9,3 +9,10 @@
 .externalNativeBuild
 app/src/main/assets/*.jar
 app/src/main/assets/*.dex
+
+.project
+.idea
+.settings
+gradlew*
+.classpath
+gradle

@@ -46,7 +46,7 @@
                         android:background="@drawable/library_rating_bg"
                         android:clickable="false"
                         android:gravity="center"
-                        android:src="@drawable/ic_fiber_new_black_24dp"
+                        app:srcCompat="@drawable/ic_fiber_new_black_24dp"
                         android:tint="?attr/colorAccent" />
 
                     <include layout="@layout/toolbar_icon" />
@@ -66,7 +66,7 @@
                             android:background="@drawable/library_rating_bg"
                             android:clickable="false"
                             android:gravity="center"
-                            android:src="@drawable/ic_star_black_24dp"
+                            app:srcCompat="@drawable/ic_star_black_24dp"
                             android:tint="?attr/colorAccent" />
 
                         <TextView
@@ -86,7 +86,7 @@
                         android:background="@drawable/library_rating_bg"
                         android:clickable="false"
                         android:gravity="center"
-                        android:src="@drawable/ic_search_black_24dp"
+                        app:srcCompat="@drawable/ic_search_black_24dp"
                         android:tint="?attr/colorAccent" />
                 </com.github.axet.androidlibrary.widgets.EqualLinearLayout>
             </LinearLayout>

@@ -6,8 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.preference.PreferenceManager;
+import androidx.appcompat.app.AlertDialog;
+import androidx.preference.PreferenceManager;
 
 import com.github.axet.androidlibrary.net.HttpClient;
 import com.github.axet.androidlibrary.widgets.ErrorDialog;
