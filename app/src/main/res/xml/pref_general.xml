@@ -5,6 +5,12 @@
         android:summary="@string/pref_storagepath_summary"
         android:title="@string/pref_storagepath_title" />
 
+    <Preference android:title="@string/dictionary_settings"
+        android:summary="@string/dictionary_settings_summary">
+        <intent
+            android:action="org.zorgblub.rikai.download.settings.ui.DictionaryConfigActivity"/>
+    </Preference>
+
     <ListPreference
         android:defaultValue="PAGING"
         android:entries="@array/viewmode_text"

@@ -1,3 +1,5 @@
 include ':app'
 include ':android-fbreader-library'
 include ':android-library'
+include ':typhonlib'
+project( ':typhonlib').projectDir = new File('../typhonlib/')

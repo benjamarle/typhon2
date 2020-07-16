@@ -1,12 +1,25 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     tools:context="com.github.axet.bookreader.fragments.ReaderFragment">
 
     <com.github.axet.bookreader.widgets.FBReaderView
         android:id="@+id/main_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-</FrameLayout>
+
+    <org.zorgblub.rikai.glosslist.DictionaryPane
+        android:id="@+id/definition_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/main_view"
+        android:orientation="vertical"
+        android:visibility="gone"
+        custom:bar_height="40dp"
+        custom:base_text_size="20sp"
+        custom:close_button_width="50dp"
+        custom:show_bar="true" />
+</RelativeLayout>

@@ -111,6 +111,7 @@ import org.geometerplus.zlibrary.text.view.ZLTextWordCursor;
 import org.geometerplus.zlibrary.text.view.ZLTextWordRegionSoul;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidPaintContext;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
+import org.zorgblub.typhon.TyphonIntegration;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -135,6 +136,7 @@ public class FBReaderView extends RelativeLayout {
     public Storage.FBook book;
     public PluginView pluginview;
     public Listener listener;
+
     String title;
     Window w;
     SelectionView selection;
@@ -142,6 +144,8 @@ public class FBReaderView extends RelativeLayout {
     DrawerLayout drawer;
     PluginView.Search search;
     int searchPagePending;
+
+    TyphonIntegration typhon;
 
     public static void showControls(final ViewGroup p, final View areas) {
         p.removeCallbacks((Runnable) areas.getTag());
@@ -322,7 +326,7 @@ public class FBReaderView extends RelativeLayout {
             if (Build.VERSION.SDK_INT >= 21 && pm.isPowerSaveMode())
                 return Animation.none;
             else
-                return super.getAnimationType();
+              return super.getAnimationType();
         }
 
         public void setScalingType(ZLTextImageElement imageElement, ZLPaintContext.ScalingType s) {
@@ -343,7 +347,7 @@ public class FBReaderView extends RelativeLayout {
             if (widget instanceof ScrollWidget) {
                 ((ScrollWidget) widget).adapter.processInvalidate();
                 ((ScrollWidget) widget).adapter.processClear();
-            }
+             }
         }
 
         @Override
@@ -353,12 +357,15 @@ public class FBReaderView extends RelativeLayout {
 
         @Override
         public void onFingerSingleTap(int x, int y) {
+            ZLTextRegion textRegion = findRegion(x, y, maxSelectionDistance(), ZLTextRegion.AnyRegionFilter);
+            TyphonIntegration typhon = TyphonIntegration.getInstance();
+            typhon.onTap(textRegion);
             final ZLTextHighlighting highlighting = findHighlighting(x, y, maxSelectionDistance());
             if (highlighting instanceof ZLBookmark) {
                 app.runAction(ActionCode.SELECTION_BOOKMARK, ((ZLBookmark) highlighting).b);
                 return;
             }
-            super.onFingerSingleTap(x, y);
+
         }
 
         @Override
@@ -1048,9 +1055,14 @@ public class FBReaderView extends RelativeLayout {
         create();
     }
 
+    public FBReaderApp getApp() {
+        return app;
+    }
+
     public void create() {
         config = new ConfigShadow();
         app = new FBReaderApp(getContext());
+        typhon = TyphonIntegration.createInstance(this);
 
         app.setWindow(new FBApplicationWindow());
         app.initWindow();

@@ -2,15 +2,15 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.github.axet.dxplugin'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '28.0.3'
+    compileSdkVersion 29
+    buildToolsVersion '29.0.3'
 
     defaultConfig {
-        applicationId "com.github.axet.bookreader"
-        minSdkVersion 9
-        targetSdkVersion 26
-        versionCode  376
-        versionName  "1.12.15"
+        applicationId "org.zorgblub.typhon2"
+        minSdkVersion 15
+        targetSdkVersion 29
+        versionCode  1
+        versionName  "2.0.0"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         multiDexEnabled true
     }
@@ -50,6 +50,7 @@ android {
 }
 
 dependencies {
+    implementation project(path: ':typhonlib')
     testImplementation 'junit:junit:4.12'
     implementation 'com.github.axet:android-library:1.32.20' // implementation project(':android-library')
     implementation 'com.google.android.material:material:1.0.0'

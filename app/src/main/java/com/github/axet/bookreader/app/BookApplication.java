@@ -1,12 +1,24 @@
 package com.github.axet.bookreader.app;
 
+import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.net.Uri;
 
 import com.github.axet.androidlibrary.app.MainApplication;
 import com.github.axet.androidlibrary.net.HttpClient;
+import com.github.axet.androidlibrary.widgets.OpenChoicer;
+import com.github.axet.androidlibrary.widgets.OpenFileDialog;
 import com.github.axet.bookreader.R;
+import com.github.axet.bookreader.activities.MainActivity;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
+import org.zorgblub.rikai.download.settings.DictionarySettings;
+import org.zorgblub.rikai.download.settings.ui.OnFileChosenListener;
+import org.zorgblub.rikai.download.settings.ui.TyphonFileChooser;
+
+import java.io.File;
 
 public class BookApplication extends MainApplication {
     public static String PREFERENCE_THEME = "theme";
@@ -35,12 +47,40 @@ public class BookApplication extends MainApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        BookApplication.context = getApplicationContext();
+        DictionarySettings.setup(context, new TyphonFileChooser() {
+            @Override
+            public void startFileChooser(OnFileChosenListener listener, Activity activity) {
+                OpenChoicer choicer = new OpenChoicer(OpenFileDialog.DIALOG_TYPE.FILE_DIALOG, true) {
+                    @Override
+                    public void onResult(Uri uri) {
+                        String s = uri.getScheme();
+                        if (!s.equals(ContentResolver.SCHEME_FILE)) {
+                            listener.onFileChosen(null);
+                            return;
+                        }
+                        File f = Storage.getFile(uri);
+                        listener.onFileChosen(f);
+                    }
+                };
+                choicer.setStorageAccessFramework(activity, MainActivity.RESULT_FILE);
+                choicer.setPermissionsDialog(activity, Storage.PERMISSIONS_RO, MainActivity.RESULT_FILE);
+                choicer.show(null);
+            }
+        });
         zlib = new ZLAndroidApplication() {
             {
+
                 attachBaseContext(BookApplication.this);
                 onCreate();
             }
         };
         new HttpClient.SpongyLoader(this, false);
+    }
+
+    private static Context context;
+
+    public static Context getAppContext() {
+        return BookApplication.context;
     }
 }

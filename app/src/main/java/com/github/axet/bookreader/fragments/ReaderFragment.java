@@ -65,6 +65,11 @@ import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.zlibrary.core.util.ZLTTFInfoDetector;
 import org.geometerplus.zlibrary.core.view.ZLViewEnums;
 import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
+import org.zorgblub.anki.AnkiDroidHelper;
+import org.zorgblub.rikai.glosslist.DictionaryPane;
+import org.zorgblub.rikai.glosslist.SelectedWord;
+import org.zorgblub.typhon.TyphonIntegration;
+import org.zorgblub.typhon.WordListener;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -75,7 +80,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.TreeSet;
 
-public class ReaderFragment extends Fragment implements MainActivity.SearchListener, SharedPreferences.OnSharedPreferenceChangeListener, FullscreenActivity.FullscreenListener, MainActivity.OnBackPressed {
+
+public class ReaderFragment extends Fragment implements MainActivity.SearchListener, SharedPreferences.OnSharedPreferenceChangeListener, FullscreenActivity.FullscreenListener, MainActivity.OnBackPressed , WordListener, DictionaryPane.BookReader {
     public static final String TAG = ReaderFragment.class.getSimpleName();
 
     public static final File FONTS = new File(Environment.getExternalStorageDirectory(), "Fonts");
@@ -110,6 +116,9 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
             savePosition();
         }
     };
+
+    private DictionaryPane dictionaryPane;
+
 
     public static View getOverflowMenuButton(Activity a) {
         return getOverflowMenuButton((ViewGroup) a.findViewById(R.id.toolbar));
@@ -616,6 +625,12 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         final MainActivity main = (MainActivity) getActivity();
         fb = (FBReaderView) v.findViewById(R.id.main_view);
 
+        this.dictionaryPane = v.findViewById(R.id.definition_view);
+        this.dictionaryPane.setBookReader(this);
+        TyphonIntegration typhon = TyphonIntegration.getInstance();
+
+        typhon.setWordListener(this);
+
         fb.listener = new FBReaderView.Listener() {
             @Override
             public void onScrollingFinished(ZLViewEnums.PageIndex index) {
@@ -670,11 +685,49 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
             @Override
             public void run() {
                 updateToolbar(); // update toolbar after page been drawn to detect RTL
-                fb.showControls(); //  update toolbar after page been drawn, getWidth() == 0
+                // typhon fb.showControls(); //  update toolbar after page been drawn, getWidth() == 0
             }
         });
 
         return v;
+    }
+
+    @Override
+    public void onWordChanged(SelectedWord word) {
+        this.dictionaryPane.onWordChanged(word);
+    }
+
+
+    @Override
+    public String getBookTitle() {
+        return fb.book.info.title;
+    }
+
+    @Override
+    public void setMatch(SelectedWord word, int length) {
+        TyphonIntegration typhon = TyphonIntegration.getInstance();
+        if(typhon == null)
+            return;
+        typhon.setMatch(word, length);
+    }
+
+    @Override
+    public void removeMatch() {
+        TyphonIntegration typhon = TyphonIntegration.getInstance();
+        if(typhon == null)
+            return;
+        typhon.removeMatch();
+    }
+
+    @Override
+    public int getHeight() {
+        return fb.getHeight();
+    }
+
+    @Override
+    public void requestPermission() {
+        AnkiDroidHelper ankiHelper = new AnkiDroidHelper(this.getContext());
+        ankiHelper.requestPermission(getActivity(), MainActivity.ANKI);
     }
 
     void updateToolbar() {
@@ -1035,7 +1088,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals(BookApplication.PREFERENCE_VIEW_MODE)) {
             fb.configWidget(sharedPreferences);
-            fb.showControls();
+            //typhon fb.showControls();
         }
         if (key.equals(BookApplication.PREFERENCE_THEME)) {
             fb.configColorProfile(sharedPreferences);

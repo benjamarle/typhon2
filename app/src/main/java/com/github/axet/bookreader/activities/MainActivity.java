@@ -67,6 +67,7 @@ import com.github.axet.bookreader.widgets.RotatePreferenceCompat;
 import org.geometerplus.fbreader.fbreader.options.ImageOptions;
 import org.geometerplus.fbreader.fbreader.options.MiscOptions;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
+import org.zorgblub.anki.AnkiDroidHelper;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -77,7 +78,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class MainActivity extends FullscreenActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends FullscreenActivity implements NavigationView.OnNavigationItemSelectedListener, ActivityCompat.OnRequestPermissionsResultCallback {
     public static final String TAG = MainActivity.class.getSimpleName();
 
     public static final String LIBRARY = "library";
@@ -87,6 +88,7 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
 
     public static final int RESULT_FILE = 1;
     public static final int RESULT_ADD_CATALOG = 2;
+    public static final int ANKI = 402;
 
     Storage storage;
     OpenChoicer choicer;
@@ -853,6 +855,8 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
         isRunning = false;
     }
 
+
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -862,6 +866,7 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
                 if (choicer != null) // called twice or activity reacated
                     choicer.onRequestPermissionsResult(permissions, grantResults);
                 break;
+
         }
     }
 
